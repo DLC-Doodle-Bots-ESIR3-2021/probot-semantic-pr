@@ -6,7 +6,7 @@ export = (app : Probot) => {
   app.on("pull_request_review.submitted",
   async context => {
     if (context.payload.pull_request.merged_at === null) {
-      const required_num_prr = 1
+      const required_num_prr = 2
       const pr_num:number = context.payload.pull_request.number
       const pr_node_id:string = context.payload.pull_request.node_id
 
