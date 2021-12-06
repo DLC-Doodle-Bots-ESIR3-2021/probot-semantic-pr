@@ -22,7 +22,7 @@ export = (app : Probot) => {
       }`,
       {
         headers: {
-          authorization: `token ${process.env.GITHUB_PAT}`,
+          authorization: `token ${process.env.PRIVATE_KEY}`,
         },
       })
 
@@ -41,7 +41,7 @@ export = (app : Probot) => {
           }`,
           {
             headers: {
-              authorization: `token ${process.env.GITHUB_PAT}`,
+              authorization: `token ${process.env.PRIVATE_KEY}`,
             },
           })
           
