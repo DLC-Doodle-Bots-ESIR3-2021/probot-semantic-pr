@@ -1,12 +1,22 @@
 import { Probot } from "probot";
+import { InstallationAccessTokenAuthentication } from "@octokit/auth-app/dist-types/types";
 
 export = (app : Probot) => {  
-  app.log.info("Probot-semantic-pr is running")   
+  app.log.info("Probot-approved-pr is running")   
   /** handle depreacated tags in the andi PR's */        
   app.on("pull_request_review.submitted",
   async context => {
+    const installationId = context.payload.installation?.id
+
+    // Retrieve installation access token
+    const installationAuthentication = await context.octokit.auth({
+      type: "installation",
+      installationId: installationId,
+    }) as InstallationAccessTokenAuthentication;
+    const token = installationAuthentication.token;
+
     if (context.payload.pull_request.merged_at === null) {
-      const required_num_prr = 2
+      const required_num_prr = 0
       const pr_num:number = context.payload.pull_request.number
       const pr_node_id:string = context.payload.pull_request.node_id
 
@@ -22,7 +32,7 @@ export = (app : Probot) => {
       }`,
       {
         headers: {
-          authorization: `token ${process.env.PRIVATE_KEY}`,
+          authorization: `token ${token}`,
         },
       })
 
@@ -41,7 +51,7 @@ export = (app : Probot) => {
           }`,
           {
             headers: {
-              authorization: `token ${process.env.PRIVATE_KEY}`,
+              authorization: `token ${token}`,
             },
           })
           
