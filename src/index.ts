@@ -16,7 +16,7 @@ export = (app : Probot) => {
     const token = installationAuthentication.token;
 
     if (context.payload.pull_request.merged_at === null) {
-      const required_num_prr = 0
+      const required_num_prr = 2
       const pr_num:number = context.payload.pull_request.number
       const pr_node_id:string = context.payload.pull_request.node_id
 
